@@ -12,6 +12,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 @Configuration
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
@@ -26,6 +28,10 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 		MappingJackson2HttpMessageConverter json = new MappingJackson2HttpMessageConverter();
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+		SimpleModule simpleModule = new SimpleModule();
+		simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
+		simpleModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
+		objectMapper.registerModule(simpleModule);
 		json.setObjectMapper(objectMapper);
 		return json;
 	}

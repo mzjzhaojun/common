@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import com.yt.app.frame.id.IdWorker;
+import com.yt.app.frame.generate.GenerateId;
 
 @Configuration
 public class AppConfiguration {
@@ -18,8 +18,8 @@ public class AppConfiguration {
 	AppConfig appConfig;
 
 	@Bean
-	public IdWorker IdWorker() {
-		return new IdWorker(Long.parseLong(appConfig.getWorkerId()));
+	public GenerateId IdWorker() {
+		return new GenerateId(Long.parseLong(appConfig.getWorkerId()), Long.parseLong(appConfig.getWorkerKey()));
 	}
 
 	@Bean

@@ -1,4 +1,4 @@
-package com.yt.app.test;
+package com.yt.app.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,16 +9,16 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class TestConnection {
-	private static TestConnection getcon;
+public class DbConnection {
+	private static DbConnection getcon;
 
-	private TestConnection() {
+	private DbConnection() {
 		init();
 	}
 
-	public static TestConnection getInstance() {
+	public static DbConnection getInstance() {
 		if (getcon == null) {
-			getcon = new TestConnection();
+			getcon = new DbConnection();
 		}
 		return getcon;
 	}
@@ -34,12 +34,13 @@ public class TestConnection {
 	public static String commndPage;
 	public static String osName;
 	public static String version;
+	public static String pagefilePath;
 
 	private static String FILE_PATH_NAME = "/config/mysql.properties";
 
 	private void init() {
 		try {
-			String filePaths = TestConnection.class.getResource(FILE_PATH_NAME).getPath();
+			String filePaths = DbConnection.class.getResource(FILE_PATH_NAME).getPath();
 			File file = new File(filePaths);
 			InputStream in = new FileInputStream(file);
 			Properties props = new Properties();

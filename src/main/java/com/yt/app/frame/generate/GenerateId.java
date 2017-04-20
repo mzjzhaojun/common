@@ -1,7 +1,6 @@
-package com.yt.app.frame.id;
+package com.yt.app.frame.generate;
 
-public class AutoId {
-
+public class GenerateId {
 	private final long twepoch = 1288834974657L;
 	private final long workerIdBits = 5L;
 	private final long datacenterIdBits = 5L;
@@ -18,7 +17,7 @@ public class AutoId {
 	private long sequence = 0L;
 	private long lastTimestamp = -1L;
 
-	public AutoId(long workerId, long datacenterId) {
+	public GenerateId(long workerId, long datacenterId) {
 		if (workerId > maxWorkerId || workerId < 0) {
 			throw new IllegalArgumentException(String.format("worker Id can't be greater than %d or less than 0", maxWorkerId));
 		}
@@ -58,5 +57,4 @@ public class AutoId {
 	protected long timeGen() {
 		return System.currentTimeMillis();
 	}
-
 }

@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-import com.yt.app.frame.Listener.FileUploadProgressListener;
+import com.yt.app.frame.listener.FileUploadProgressListener;
 
 public class YtMultipartResolver extends CommonsMultipartResolver {
 

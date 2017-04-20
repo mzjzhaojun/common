@@ -16,7 +16,7 @@ import com.yt.app.annotation.RedisCacheAnnotation;
 import com.yt.app.annotation.RedisCacheEvictAnnotation;
 import com.yt.app.frame.config.AppConfig;
 import com.yt.app.frame.config.RedisConfig;
-import com.yt.app.frame.id.IdWorker;
+import com.yt.app.frame.generate.GenerateId;
 import com.yt.app.util.RedisCacheUtil;
 
 @Aspect
@@ -32,7 +32,7 @@ public class RedisCacheAdvice {
 	AppConfig appconfig;
 	
 	@Autowired
-	IdWorker idworker;
+	GenerateId idworker;
 
 	@Autowired
 	Gson gson;
