@@ -21,6 +21,7 @@ import com.yt.app.util.DbConnection;
 
 public class GenerateCode {
 	private static GenerateCode ac;
+	private static GenerateId gid;
 
 	private GenerateCode() {
 		init();
@@ -30,6 +31,8 @@ public class GenerateCode {
 		if (ac == null) {
 			ac = new GenerateCode();
 		}
+		if (gid == null)
+			gid = new GenerateId(1, 1);
 		return ac;
 	}
 
@@ -52,7 +55,7 @@ public class GenerateCode {
 			DbConnection.basePage = "com.yt.app.api." + DbConnection.version;
 			DbConnection.commndPage = "com.yt.app.common.base";
 			DbConnection.filePath = courseFile + "/src/main/java/com/yt/app/api/" + DbConnection.version;
-			DbConnection.pagefilePath = courseFile + "/resources/templates/static/project/" + DbConnection.osName + "/html/";
+			DbConnection.pagefilePath = courseFile + "/resources/templates/static/project/dfgj/html/";
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -166,6 +169,7 @@ public class GenerateCode {
 			while (rs.next()) {
 				list.add(rs.getString("TABLE_NAME"));
 			}
+			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -173,7 +177,7 @@ public class GenerateCode {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void crud(List<String> tables, boolean code, boolean html) {
+	public void crud(List<String> tables, boolean code, boolean html, boolean data, String sysid) {
 		try {
 			Connection conn = sqlcon.getCon();
 			Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -210,13 +214,9 @@ public class GenerateCode {
 				r = (HashMap[]) null;
 				iRowNum = 0;
 				int iColCnt = 0;
-				if (sqlcon.getType().equals("sqlServer")) {
-					rs = stmt.executeQuery("select column_name,data_type from information_schema.columns where table_name = '" + tb + "'");
-				} else {
-					rs = stmt
-							.executeQuery("select column_name,data_type,column_comment,character_maximum_length from information_schema.columns where table_schema = '"
-									+ DbConnection.dbName + "' and table_name='" + tb + "'");
-				}
+				rs = stmt
+						.executeQuery("select column_name,data_type,column_comment,character_maximum_length from information_schema.columns where table_schema = '"
+								+ DbConnection.dbName + "' and table_name='" + tb + "'");
 				ResultSetMetaData MetaData = rs.getMetaData();
 				iColCnt = MetaData.getColumnCount();
 				if (rs.next()) {
@@ -239,6 +239,7 @@ public class GenerateCode {
 					}
 					iRowNum++;
 				}
+				rs.close();
 				String bt = tn.substring(0, 1).toUpperCase() + tn.substring(1);
 				String[][] ts = new String[r.length][4];
 				String data_type = "DATA_TYPE";
@@ -1135,6 +1136,33 @@ public class GenerateCode {
 					bw.write("</html>\r\n");
 					bw.flush();
 					bw.close();
+				}
+
+				// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				if (data) {
+					String comment = "";
+					Long lid1 = gid.nextId();
+					Long lid2 = gid.nextId();
+					Long lid3 = gid.nextId();
+					Long lid4 = gid.nextId();
+					Long lid5 = gid.nextId();
+					String tl = tb.toLowerCase();
+					rs = stmt.executeQuery("SELECT TABLE_COMMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'edu' and TABLE_NAME = '"+tb+"'");
+					if (rs.next()) {
+						comment = rs.getString("TABLE_COMMENT");
+						if(!comment.equals(""))
+							comment = comment.replace("表", "");
+						else
+							comment = tl;
+					}
+					if(comment.length()>=10)
+						comment = comment.substring(0,10);
+					rs.close();
+					stmt.executeUpdate("INSERT INTO link VALUES (" + lid1 + ", '"+comment+"新增资源', '" + tl + "post', 'http://localhost:17000/dfgj/rest/v1/" + tl+ "', '0')");
+					stmt.executeUpdate("INSERT INTO link VALUES (" + lid2 + ", '"+comment+"新增资源', '" + tl + "list', 'http://localhost:17000/dfgj/rest/v1/" + tl+ "/', '0')");
+					stmt.executeUpdate("INSERT INTO menu VALUES (" + lid3 + ", '"+comment+"', '', '31', '../../dfgj/html/"+tl+"/list.html', null, '"+sysid+"', '1', '1', '41', '0')");
+					stmt.executeUpdate("INSERT INTO menu_links VALUES ("+lid4+", "+lid3+", "+lid1+", '0')");
+					stmt.executeUpdate("INSERT INTO menu_links VALUES ("+lid5+", "+lid3+", "+lid2+", '0')");
 				}
 				System.out.println("<<<<<<<========：" + tb);
 			}
