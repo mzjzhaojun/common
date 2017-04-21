@@ -34,7 +34,7 @@ public class SimpleCORSFilter extends GenericFilterBean {
 		response.setHeader("Access-Control-Allow-Credentials", "true");
 		response.setHeader("Access-Control-Allow-Methods", "DELETE, GET, OPTIONS, PATCH, POST, PUT");
 		response.setHeader("Access-Control-Max-Age", "3600");
-		response.setHeader("Access-Control-Allow-Headers", "x-requested-with,content-type,cookie,pageno,pagesize,orderby,dir,csrf");
+		response.setHeader("Access-Control-Allow-Headers", "x-requested-with,content-type,cookie,pageno,pagesize,orderby,dir");
 		response.setHeader("X-Frame-Options", "SAMEORIGIN");
 		response.setHeader("Access-Control-Expose-Headers", "totalCount,pageCount");
 		if (appconfig.getStatus().equals("/error/509")) {

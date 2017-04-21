@@ -764,7 +764,7 @@ public class GenerateCode {
 					bw.write("    <meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\r\n");
 					bw.write("    <!-- 基础样式 -->\r\n");
 					bw.write("    <link rel=\"icon\" type=\"image/x-icon\" href=\"../../../resource/img/logo.ico\">\r\n");
-					bw.write("    <link rel=\"stylesheet\" type=\"text/css\" href=\"../../../../resource/css/bootstrap.min.css\">\r\n");
+					bw.write("    <link rel=\"stylesheet\" type=\"text/css\" href=\"../../../../resource/css/bootstrap.css\">\r\n");
 					bw.write("    <link rel=\"stylesheet\" type=\"text/css\" href=\"../../../../resource/css/common.css\">\r\n");
 					bw.write("    <link rel=\"stylesheet\" type=\"text/css\" href=\"../../../../resource/js/validate/css/validate.css\"/>\r\n");
 					bw.write("    <!-- 基础js -->\r\n");
@@ -850,7 +850,7 @@ public class GenerateCode {
 					bw.write("    <meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\r\n");
 					bw.write("    <!-- 基础样式 -->\r\n");
 					bw.write("    <link rel=\"icon\" type=\"image/x-icon\" href=\"../../../resource/img/logo.ico\">\r\n");
-					bw.write("    <link rel=\"stylesheet\" type=\"text/css\" href=\"../../../../resource/css/bootstrap.min.css\">\r\n");
+					bw.write("    <link rel=\"stylesheet\" type=\"text/css\" href=\"../../../../resource/css/bootstrap.css\">\r\n");
 					bw.write("    <link rel=\"stylesheet\" type=\"text/css\" href=\"../../../../resource/css/common.css\">\r\n");
 					bw.write("    <!-- 基础js -->\r\n");
 					bw.write("    <script type=\"text/javascript\" src=\"../../../../resource/js/angular-1.0.1.min.js\"></script>\r\n");
@@ -911,7 +911,7 @@ public class GenerateCode {
 					bw.write("    <meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\r\n");
 					bw.write("    <!-- 基础样式 -->\r\n");
 					bw.write("    <link rel=\"icon\" type=\"image/x-icon\" href=\"../../../resource/img/logo.ico\">\r\n");
-					bw.write("    <link rel=\"stylesheet\" type=\"text/css\" href=\"../../../../resource/css/bootstrap.min.css\">\r\n");
+					bw.write("    <link rel=\"stylesheet\" type=\"text/css\" href=\"../../../../resource/css/bootstrap.css\">\r\n");
 					bw.write("    <link rel=\"stylesheet\" type=\"text/css\" href=\"../../../../resource/css/list.css\">\r\n");
 					bw.write("    <script type=\"text/javascript\" src=\"../../../../resource/js/jquery-1.9.1.min.js\"></script>\r\n");
 					bw.write("    <script type=\"text/javascript\" src=\"../../../../resource/js/angular-1.0.1.min.js\"></script>\r\n");
@@ -1055,7 +1055,7 @@ public class GenerateCode {
 					bw.write("    <meta http-equiv=\"description\" content=\"this is my page\">\r\n");
 					bw.write("    <meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\r\n");
 					bw.write("    <link rel=\"icon\" type=\"image/x-icon\" href=\"../../../resource/img/logo.ico\">\r\n");
-					bw.write("    <link rel=\"stylesheet\" type=\"text/css\" href=\"../../../../resource/css/bootstrap.min.css\">\r\n");
+					bw.write("    <link rel=\"stylesheet\" type=\"text/css\" href=\"../../../../resource/css/bootstrap.css\">\r\n");
 					bw.write("    <link rel=\"stylesheet\" type=\"text/css\" href=\"../../../../resource/css/common.css\">\r\n");
 					bw.write("    <link rel=\"stylesheet\" type=\"text/css\" href=\"../../../../resource/js/validate/css/validate.css\"/>\r\n");
 					bw.write("    <!-- 基础js -->\r\n");
