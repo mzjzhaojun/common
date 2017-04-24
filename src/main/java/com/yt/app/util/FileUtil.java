@@ -3,13 +3,24 @@
  */
 package com.yt.app.util;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -350,5 +361,165 @@ public class FileUtil {
 			sb.append(trimPath(path));
 		}
 		return sb.toString();
+	}
+
+	public static void dowloadfile(com.yt.app.modul.File fl, HttpServletResponse response) {
+		if (fl == null) {
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return;
+		}
+		StringBuffer sb = new StringBuffer();
+		String filepath = sb.append(fl.getRoot_path()).append(fl.getRelative_path()).append(java.io.File.separator).append(fl.getFile_name())
+				.toString();
+		java.io.File file = new java.io.File(filepath);
+		if (FileUtil.isImage(file)) {
+			if (file.exists()) {
+				response.setContentType("image/" + fl.getSuffix());
+			} else {
+				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+		} else {
+			response.setContentType("application/octet-stream");
+			response.setHeader("Accept-Ranges", "bytes");
+			response.setHeader("Content-Disposition", "attachment;fileName=" + new String(fl.getFile_name()));
+		}
+		try {
+			FileInputStream inputStream = new FileInputStream(file);
+			OutputStream stream = response.getOutputStream();
+			byte[] buffer = new byte[1024 * 1024 * 4];
+			int i = -1;
+			while ((i = inputStream.read(buffer)) != -1) {
+				stream.write(buffer, 0, i);
+			}
+			stream.flush();
+			stream.close();
+			inputStream.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void dowloadfiles(List<com.yt.app.modul.File> listfiles, HttpServletResponse response) {
+		if (listfiles.size() == 0) {
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return;
+		}
+		try {
+			String rootpath = "";
+			List<File> files = new ArrayList<File>();
+			for (com.yt.app.modul.File fl : listfiles) {
+				StringBuffer sb = new StringBuffer();
+				String filepath = sb.append(fl.getRoot_path()).append(fl.getRelative_path()).append(java.io.File.separator).append(fl.getFile_name())
+						.toString();
+				File file = new File(filepath);
+				rootpath = fl.getRoot_path();
+				files.add(file);
+			}
+			String outFilePath = rootpath + "\\all.zip";
+			File file = new File(outFilePath);
+			FileOutputStream outStream = new FileOutputStream(file);
+			ZipOutputStream toClient = new ZipOutputStream(outStream);
+			zipFile(files, toClient);
+			toClient.close();
+			outStream.close();
+			downloadZip(file, response);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 压缩文件列表中的文件
+	 * 
+	 * @param files
+	 * @param outputStream
+	 * @throws IOException
+	 */
+	public static void zipFile(List<File> files, ZipOutputStream outputStream) {
+		try {
+			int size = files.size();
+			// 压缩列表中的文件
+			for (int i = 0; i < size; i++) {
+				File file = (File) files.get(i);
+				zipFile(file, outputStream);
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	/**
+	 * 将文件写入到zip文件中
+	 * 
+	 * @param inputFile
+	 * @param outputstream
+	 * @throws Exception
+	 */
+	public static void zipFile(File inputFile, ZipOutputStream outputstream) {
+		try {
+			if (inputFile.exists()) {
+				if (inputFile.isFile()) {
+					FileInputStream inStream = new FileInputStream(inputFile);
+					BufferedInputStream bInStream = new BufferedInputStream(inStream);
+					ZipEntry entry = new ZipEntry(inputFile.getName());
+					outputstream.putNextEntry(entry);
+					final int MAX_BYTE = 10 * 1024 * 1024; // 最大的流为10M
+					long streamTotal = 0;
+					int streamNum = 0;
+					int leaveByte = 0;
+					byte[] inOutbyte;
+					streamTotal = bInStream.available();
+					streamNum = (int) Math.floor(streamTotal / MAX_BYTE);
+					leaveByte = (int) streamTotal % MAX_BYTE;
+					if (streamNum > 0) {
+						for (int j = 0; j < streamNum; ++j) {
+							inOutbyte = new byte[MAX_BYTE];
+							bInStream.read(inOutbyte, 0, MAX_BYTE);
+							outputstream.write(inOutbyte, 0, MAX_BYTE);
+						}
+					}
+					inOutbyte = new byte[leaveByte];
+					bInStream.read(inOutbyte, 0, leaveByte);
+					outputstream.write(inOutbyte);
+					outputstream.closeEntry();
+					bInStream.close();
+					inStream.close();
+				}
+			} else {
+				throw new ServletException("not find！");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 下载打包的文件
+	 * 
+	 * @param file
+	 * @param response
+	 */
+	public static void downloadZip(File file, HttpServletResponse response) {
+		try {
+			BufferedInputStream fis = new BufferedInputStream(new FileInputStream(file.getPath()));
+			byte[] buffer = new byte[fis.available()];
+			fis.read(buffer);
+			fis.close();
+			response.reset();
+			OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
+			response.setContentType("application/octet-stream");
+			response.setHeader("Content-Disposition", "attachment;filename=" + file.getName());
+			toClient.write(buffer);
+			toClient.flush();
+			toClient.close();
+			file.delete();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 	}
 }
