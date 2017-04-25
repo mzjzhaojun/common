@@ -36,10 +36,10 @@ public class GenerateCode {
 		return ac;
 	}
 
-	public File file;
+	File file;
 	FileWriter fw;
 	BufferedWriter bw;
-	public DbConnection sqlcon = DbConnection.getInstance();
+	private DbConnection sqlcon = DbConnection.getInstance();
 	private String FILE_PATH_NAME = "/config/mysql.properties";
 
 	private void init() {
@@ -174,6 +174,14 @@ public class GenerateCode {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	public void crud(List<String> tables, boolean code) {
+		this.crud(tables, code, false, false, null);
+	}
+
+	public void crud(List<String> tables, boolean code, boolean html) {
+		this.crud(tables, code, html, false, null);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -806,6 +814,23 @@ public class GenerateCode {
 					bw.write("					})\r\n");
 					bw.write("    			}\r\n");
 					bw.write("			}\r\n");
+					bw.write("			$scope.initselect = function() {\r\n");
+					bw.write("			$http({\r\n");
+					bw.write("				url : parent.getMenuLinksHref(\"orgregionslist\"),\r\n");
+					bw.write("				method : 'POST',\r\n");
+					bw.write("				dataType : \"json\",\r\n");
+					bw.write("				withCredentials : true,\r\n");
+					bw.write("				headers : {\r\n");
+					bw.write("					'Content-Type' : 'application/json;charset=UTF-8;'\r\n");
+					bw.write("				},\r\n");
+					bw.write("				data : ''\r\n");
+					bw.write("				}).success(function(data, status, headers, config) {\r\n");
+					bw.write("					$scope.selects = data;\r\n");
+					bw.write("				}).error(function(data, status, headers, config) {\r\n");
+					bw.write("					response(status);\r\n");
+					bw.write("				})\r\n");
+					bw.write("			}\r\n");
+					bw.write("		//$scope.initselect();\r\n");
 					bw.write("		})\r\n");
 					bw.write("	</script>\r\n");
 					bw.write("</head>\r\n");
@@ -823,14 +848,23 @@ public class GenerateCode {
 					bw.write("    		</div>\r\n");
 					bw.write("   		<div class=\"col-lg-6\">\r\n");
 					for (int i = 0; i < r.length; i++) {
-						if (ts[i][1].toString().equals("ID") || ts[i][1].toString().equals("version"))
+						if (ts[i][1].toString().equals("id") || ts[i][1].toString().equals("version"))
 							continue;
-						bw.write("	   		 	<div class=\"input-group input-group-sm\">\r\n");
-						bw.write("	            	<span class=\"input-group-addon text-right spanwidth\">" + ts[i][2] + "</span>\r\n");
-						bw.write("	           		<input type=\"text\" class=\"form-control required\" placeholder=\"请输入" + ts[i][2] + "\" name=\""
-								+ ts[i][1] + "\" ng-model=\"formData." + ts[i][1] + "\" maxlength=\"" + ts[i][3] + "\">\r\n");
-						bw.write("	        		<span class=\"input-group-addon verifyprompt\">*</span>\r\n");
-						bw.write("	       		 </div>\r\n");
+						if(ts[i][1].toString().indexOf("id")!=-1){
+							bw.write("	   		 	<div class=\"input-group input-group-sm\">\r\n");
+							bw.write("	   		 		<span class=\"input-group-addon text-right spanwidth\">"+ts[i][2]+"</span>\r\n");
+							bw.write("	   		 		<select class=\"form-control required\" name=\"" + ts[i][1] + "\" ng-model=\"formData." + ts[i][1] + "\" ng-options=\"data.id as data.name for data in selects\">\r\n");
+							bw.write("	   		 			<option value=''>请选择"+ts[i][2]+"</option>\r\n");
+							bw.write("	   		 			</select>\r\n");
+							bw.write("	   		 	<span class=\"input-group-addon verifyprompt\">*</span>\r\n");
+							bw.write("	   		 	</div>\r\n");
+						}else{
+							bw.write("	   		 	<div class=\"input-group input-group-sm\">\r\n");
+							bw.write("	            	<span class=\"input-group-addon text-right spanwidth\">" + ts[i][2] + "</span>\r\n");
+							bw.write("	           		<input type=\"text\" class=\"form-control required\" placeholder=\"请输入" + ts[i][2] + "\" name=\""+ ts[i][1] + "\" ng-model=\"formData." + ts[i][1] + "\" maxlength=\"" + ts[i][3] + "\">\r\n");
+							bw.write("	        		<span class=\"input-group-addon verifyprompt\">*</span>\r\n");
+							bw.write("	       		 </div>\r\n");
+						}
 					}
 					bw.write("	        </div>\r\n");
 					bw.write("    </form>\r\n");
@@ -887,7 +921,7 @@ public class GenerateCode {
 					bw.write("    	</div>\r\n");
 					bw.write("   		<div class=\"col-lg-6 viewFixedWidth\">\r\n");
 					for (int i = 0; i < r.length; i++) {
-						if (ts[i][1].toString().equals("ID") || ts[i][1].toString().equals("version"))
+						if (ts[i][1].toString().equals("id") || ts[i][1].toString().equals("version"))
 							continue;
 						bw.write("   		 <div class=\"input-group input-group-sm\">\r\n");
 						bw.write("             <span class=\"input-group-addon text-right spanwidth\">" + ts[i][2] + "</span>\r\n");
@@ -1007,7 +1041,7 @@ public class GenerateCode {
 					bw.write("	    <tr class=\"info\">\r\n");
 					bw.write("	      <th>序号</th>\r\n");
 					for (int i = 0; i < r.length; i++) {
-						if (ts[i][1].toString().equals("ID") || ts[i][1].toString().equals("version"))
+						if (ts[i][1].toString().equals("id") || ts[i][1].toString().equals("version"))
 							continue;
 						bw.write("	      <th>" + ts[i][2] + "</th>\r\n");
 					}
@@ -1018,7 +1052,7 @@ public class GenerateCode {
 					bw.write("	    <tr ng-repeat=\"data in datalist\"  class='tr{{$index%2+2}}'  ng-class=\"{selected: $index==selectedRow}\">\r\n");
 					bw.write("		    <td ng-dblclick=\"toInfo(data)\">{{$index+1}}</td>\r\n");
 					for (int i = 0; i < r.length; i++) {
-						if (ts[i][1].toString().equals("ID") || ts[i][1].toString().equals("version"))
+						if (ts[i][1].toString().equals("id") || ts[i][1].toString().equals("version"))
 							continue;
 						bw.write("			<td ng-dblclick=\"toInfo(data)\">{{data." + tn + "." + ts[i][1] + "}}</td>\r\n");
 					}
@@ -1105,6 +1139,23 @@ public class GenerateCode {
 					bw.write("					})\r\n");
 					bw.write("    			}\r\n");
 					bw.write("			}\r\n");
+					bw.write("			$scope.initselect = function() {\r\n");
+					bw.write("			$http({\r\n");
+					bw.write("				url : parent.getMenuLinksHref(\"orgregionslist\"),\r\n");
+					bw.write("				method : 'POST',\r\n");
+					bw.write("				dataType : \"json\",\r\n");
+					bw.write("				withCredentials : true,\r\n");
+					bw.write("				headers : {\r\n");
+					bw.write("					'Content-Type' : 'application/json;charset=UTF-8;'\r\n");
+					bw.write("				},\r\n");
+					bw.write("				data : ''\r\n");
+					bw.write("				}).success(function(data, status, headers, config) {\r\n");
+					bw.write("					$scope.selects = data;\r\n");
+					bw.write("				}).error(function(data, status, headers, config) {\r\n");
+					bw.write("					response(status);\r\n");
+					bw.write("				})\r\n");
+					bw.write("			}\r\n");
+					bw.write("		//$scope.initselect();\r\n");
 					bw.write("		})\r\n");
 					bw.write("	</script>\r\n");
 					bw.write("</head>\r\n");
@@ -1121,14 +1172,23 @@ public class GenerateCode {
 					bw.write("    	</div>\r\n");
 					bw.write("   		<div class=\"col-lg-6\">\r\n");
 					for (int i = 0; i < r.length; i++) {
-						if (ts[i][1].toString().equals("ID") || ts[i][1].toString().equals("version"))
+						if (ts[i][1].toString().equals("id") || ts[i][1].toString().equals("version"))
 							continue;
-						bw.write("	   		 	<div class=\"input-group input-group-sm\">\r\n");
-						bw.write("	            	<span class=\"input-group-addon text-right spanwidth\">" + ts[i][2] + "</span>\r\n");
-						bw.write("	           		<input type=\"text\" class=\"form-control required\" placeholder=\"请输入" + ts[i][2] + "\" name=\""
-								+ ts[i][1] + "\" ng-model=\"formData." + ts[i][1] + "\" maxlength=\"" + ts[i][3] + "\">\r\n");
-						bw.write("	        		<span class=\"input-group-addon verifyprompt\">*</span>\r\n");
-						bw.write("	       		 </div>\r\n");
+						if(ts[i][1].toString().indexOf("id")!=-1){
+							bw.write("	   		 	<div class=\"input-group input-group-sm\">\r\n");
+							bw.write("	   		 		<span class=\"input-group-addon text-right spanwidth\">"+ts[i][2]+"</span>\r\n");
+							bw.write("	   		 		<select class=\"form-control required\" name=\"" + ts[i][1] + "\" ng-model=\"formData." + ts[i][1] + "\" ng-options=\"data.id as data.name for data in selects\">\r\n");
+							bw.write("	   		 			<option value=''>请选择"+ts[i][2]+"</option>\r\n");
+							bw.write("	   		 			</select>\r\n");
+							bw.write("	   		 	<span class=\"input-group-addon verifyprompt\">*</span>\r\n");
+							bw.write("	   		 	</div>\r\n");
+						}else{
+							bw.write("	   		 	<div class=\"input-group input-group-sm\">\r\n");
+							bw.write("	            	<span class=\"input-group-addon text-right spanwidth\">" + ts[i][2] + "</span>\r\n");
+							bw.write("	           		<input type=\"text\" class=\"form-control required\" placeholder=\"请输入" + ts[i][2] + "\" name=\""+ ts[i][1] + "\" ng-model=\"formData." + ts[i][1] + "\" maxlength=\"" + ts[i][3] + "\">\r\n");
+							bw.write("	        		<span class=\"input-group-addon verifyprompt\">*</span>\r\n");
+							bw.write("	       		 </div>\r\n");
+						}
 					}
 					bw.write("   		</div>\r\n");
 					bw.write("    </form>\r\n");
@@ -1147,22 +1207,26 @@ public class GenerateCode {
 					Long lid4 = gid.nextId();
 					Long lid5 = gid.nextId();
 					String tl = tb.toLowerCase();
-					rs = stmt.executeQuery("SELECT TABLE_COMMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'edu' and TABLE_NAME = '"+tb+"'");
+					rs = stmt.executeQuery("SELECT TABLE_COMMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'edu' and TABLE_NAME = '" + tb
+							+ "'");
 					if (rs.next()) {
 						comment = rs.getString("TABLE_COMMENT");
-						if(!comment.equals(""))
+						if (!comment.equals(""))
 							comment = comment.replace("表", "");
 						else
 							comment = tl;
 					}
-					if(comment.length()>=10)
-						comment = comment.substring(0,10);
+					if (comment.length() >= 10)
+						comment = comment.substring(0, 10);
 					rs.close();
-					stmt.executeUpdate("INSERT INTO link VALUES (" + lid1 + ", '"+comment+"新增资源', '" + tl + "post', 'http://localhost:17000/dfgj/rest/v1/" + tl+ "', '0')");
-					stmt.executeUpdate("INSERT INTO link VALUES (" + lid2 + ", '"+comment+"新增资源', '" + tl + "list', 'http://localhost:17000/dfgj/rest/v1/" + tl+ "/', '0')");
-					stmt.executeUpdate("INSERT INTO menu VALUES (" + lid3 + ", '"+comment+"', '', '31', '../../dfgj/html/"+tl+"/list.html', null, '"+sysid+"', '1', '1', '41', '0')");
-					stmt.executeUpdate("INSERT INTO menu_links VALUES ("+lid4+", "+lid3+", "+lid1+", '0')");
-					stmt.executeUpdate("INSERT INTO menu_links VALUES ("+lid5+", "+lid3+", "+lid2+", '0')");
+					stmt.executeUpdate("INSERT INTO link VALUES (" + lid1 + ", '" + tb + "新增资源', '" + tl
+							+ "post', 'http://localhost:17000/dfgj/rest/v1/" + tl + "', '0')");
+					stmt.executeUpdate("INSERT INTO link VALUES (" + lid2 + ", '" + tb + "集合资源', '" + tl
+							+ "list', 'http://localhost:17000/dfgj/rest/v1/" + tl + "/', '0')");
+					stmt.executeUpdate("INSERT INTO menu VALUES (" + lid3 + ", '" + comment + "', '', '31', '../../dfgj/html/" + tl
+							+ "/list.html', null, '" + sysid + "', '1', '1', '41', '0')");
+					stmt.executeUpdate("INSERT INTO menu_links VALUES (" + lid4 + ", " + lid3 + ", " + lid1 + ", '0')");
+					stmt.executeUpdate("INSERT INTO menu_links VALUES (" + lid5 + ", " + lid3 + ", " + lid2 + ", '0')");
 				}
 				System.out.println("<<<<<<<========：" + tb);
 			}
