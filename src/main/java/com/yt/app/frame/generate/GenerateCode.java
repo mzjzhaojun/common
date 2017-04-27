@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
-
 import com.yt.app.util.DateTimeUtil;
 import com.yt.app.util.DbConnection;
 
@@ -602,6 +601,7 @@ public class GenerateCode {
 					bw.write("package " + DbConnection.basePage + ".service.impl;\r\n");
 					bw.write("\r\n");
 					bw.write("import org.springframework.beans.factory.annotation.Autowired;\r\n");
+					bw.write("import org.springframework.transaction.annotation.Transactional;\r\n");
 					bw.write("import org.springframework.http.RequestEntity;\r\n");
 					bw.write("import org.springframework.stereotype.Service;\r\n");
 					bw.write("import " + DbConnection.basePage + "." + "mapper." + bt + "Mapper;\r\n");
@@ -627,6 +627,7 @@ public class GenerateCode {
 					bw.write("  private " + bt + "Mapper mapper;\r\n");
 					bw.write("\r\n");
 					bw.write("@Override\r\n");
+					bw.write("@Transactional\r\n");
 					bw.write("public Integer post(" + bt + " t) {\r\n");
 					bw.write("	Integer i = mapper.post(t);\r\n");
 					bw.write("	return i;\r\n");
