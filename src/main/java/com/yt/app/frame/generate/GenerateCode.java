@@ -602,6 +602,7 @@ public class GenerateCode {
 					bw.write("package " + DbConnection.basePage + ".service.impl;\r\n");
 					bw.write("\r\n");
 					bw.write("import org.springframework.beans.factory.annotation.Autowired;\r\n");
+					bw.write("import org.springframework.http.RequestEntity;\r\n");
 					bw.write("import org.springframework.stereotype.Service;\r\n");
 					bw.write("import " + DbConnection.basePage + "." + "mapper." + bt + "Mapper;\r\n");
 					bw.write("import " + DbConnection.basePage + "." + "service." + bt + "Service;\r\n");
@@ -637,10 +638,10 @@ public class GenerateCode {
 					bw.write("	Map<String, Object> param = RequestUtil.requestEntityToParamMap(requestEntity);\r\n");
 					bw.write("	int count = 0;\r\n");
 					bw.write("	if (PageBean.isPaging(param)) {\r\n");
-					bw.write("count = mapper.countlist(param);\r\n");
-					bw.write("if (count == 0) {\r\n");
-					bw.write("	return PageBean.EMPTY_PAGE;\r\n");
-					bw.write("}\r\n");
+					bw.write("  	count = mapper.countlist(param);\r\n");
+					bw.write(" 	    if (count == 0) {\r\n");
+					bw.write("			return PageBean.EMPTY_PAGE;\r\n");
+					bw.write("		}\r\n");
 					bw.write("	}\r\n");
 					bw.write("	List<" + bt + "> list = mapper.list(param);\r\n");
 					bw.write("	return new PageBean<" + bt + ">(param, list, count);\r\n");
