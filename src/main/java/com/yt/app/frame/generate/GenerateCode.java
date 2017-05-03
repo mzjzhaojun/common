@@ -1292,6 +1292,7 @@ public class GenerateCode {
 					bw.write("  	forceParse : 0,\r\n");
 					bw.write("  	showMeridian : 0\r\n");
 					bw.write("  });\r\n");
+					bw.write("  </script>\r\n");
 					bw.write("</html>\r\n");
 					bw.flush();
 					bw.close();
