@@ -38,8 +38,7 @@ public class DataSourceAdvice {
 			if (annotation == null) {
 				dataSourceHolder.markMaster();
 			}
-		}
-		if (annotation.annotationType().equals(DataSourceAnnotation.class)) {
+		} else if (annotation.annotationType().equals(DataSourceAnnotation.class)) {
 			DataSourceAnnotation rcea = (DataSourceAnnotation) annotation;
 			if (rcea.datasource().equals(DataSourceEnum.SLAVE)) {
 				dataSourceHolder.markSlave();

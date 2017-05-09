@@ -292,7 +292,6 @@ public class PoiExcelExport {
 	 *            索引 8-64 使用时不可重复
 	 * @return
 	 */
-	@SuppressWarnings("deprecation")
 	public CellStyle setColor(CellStyle style, String color, short index) {
 		if (color != "" && color != null) {
 			// 转为RGB码
@@ -320,7 +319,6 @@ public class PoiExcelExport {
 	 *            大小
 	 * @return
 	 */
-	@SuppressWarnings("deprecation")
 	public CellStyle setFontAndBorder(CellStyle style, String fontName, short size) {
 		HSSFFont font = workbook.createFont();
 		font.setFontHeightInPoints(size);

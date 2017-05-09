@@ -25,7 +25,6 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -289,17 +288,16 @@ public class ExcelUtil {
 		return rowNumber;
 	}
 
-	@SuppressWarnings("deprecation")
 	public static String getStringValue(Cell cell) {
-		switch (cell.getCellTypeEnum()) {
-		case BOOLEAN:
+		switch (cell.getCellType()) {
+		case Cell.CELL_TYPE_BOOLEAN:
 			return cell.getBooleanCellValue() ? "1" : "0";
-		case FORMULA:
+		case Cell.CELL_TYPE_FORMULA:
 			return cell.getCellFormula();
-		case NUMERIC:
-			cell.setCellType(CellType.STRING);
+		case Cell.CELL_TYPE_NUMERIC:
+			cell.setCellType(Cell.CELL_TYPE_STRING);
 			return cell.getStringCellValue();
-		case STRING:
+		case Cell.CELL_TYPE_STRING:
 			return cell.getStringCellValue();
 		default:
 			return "";
