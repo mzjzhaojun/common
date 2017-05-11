@@ -827,7 +827,7 @@ public class GenerateCode {
 					bw.write("	<!-- 初始化 -->\r\n");
 					bw.write("	<script type=\"text/javascript\">\r\n");
 					bw.write("var add = angular.module(\"add\", []);\r\n");
-					bw.write("add.controller(\"addController\",function($scope, $http) {\r\n");
+					bw.write("add.controller(\"controller\",function($scope, $http) {\r\n");
 					bw.write("	$scope.formData = {};\r\n");
 					bw.write("	//返回\r\n");
 					bw.write("	$scope.onReturn=function(){\r\n");
@@ -874,7 +874,7 @@ public class GenerateCode {
 					bw.write("	</script>\r\n");
 					bw.write("</head>\r\n");
 					bw.write("  \r\n");
-					bw.write("  <body ng-controller=\"addController\">\r\n");
+					bw.write("  <body ng-controller=\"controller\">\r\n");
 					bw.write("  	<form method=\"post\" id=\"saveForm\" action=\"\">\r\n");
 					bw.write("   <!-- 操作按钮操作区 -->\r\n");
 					bw.write("   <div class=\"col-lg-12 topActionPanel\">\r\n");
@@ -960,7 +960,7 @@ public class GenerateCode {
 					bw.write("    <!-- 初始化 -->\r\n");
 					bw.write("    <script type=\"text/javascript\">\r\n");
 					bw.write("var info = angular.module(\"info\", []);\r\n");
-					bw.write("info.controller(\"infoController\",function($scope, $http) {\r\n");
+					bw.write("info.controller(\"controller\",function($scope, $http) {\r\n");
 					bw.write("	//返回\r\n");
 					bw.write("	$scope.onReturn=function(){\r\n");
 					bw.write("history.go(-1);\r\n");
@@ -980,7 +980,7 @@ public class GenerateCode {
 					bw.write("})\r\n");
 					bw.write("	</script>\r\n");
 					bw.write("  </head>\r\n");
-					bw.write("  <body ng-controller=\"infoController\">\r\n");
+					bw.write("  <body ng-controller=\"controller\">\r\n");
 					bw.write("   <div class=\"col-lg-12 topActionPanel\">\r\n");
 					bw.write("	        <div>\r\n");
 					bw.write("	    	<button type=\"button\" class=\"btn btn-primary\" ng-click=\"onReturn()\">返 回</button>\r\n");
@@ -1027,7 +1027,7 @@ public class GenerateCode {
 					bw.write("    <script type=\"text/javascript\">\r\n");
 					bw.write("var flag = true;\r\n");
 					bw.write("var list = angular.module(\"list\", []);\r\n");
-					bw.write("list.controller(\"listController\",function($scope, $http) {	\r\n");
+					bw.write("list.controller(\"controller\",function($scope, $http) {	\r\n");
 					bw.write("	$scope.toInfo=function(data){\r\n");
 					bw.write("parent.setFunctionLinksHref(data.links==null?data._links:data.links);\r\n");
 					bw.write("location.href=\"info.html\";\r\n");
@@ -1087,13 +1087,13 @@ public class GenerateCode {
 					bw.write("})\r\n");
 					bw.write("\r\n");
 					bw.write("function confirmDeletion(){\r\n");
-					bw.write("	var appElement = document.querySelector('[ng-controller=listController]');\r\n");
+					bw.write("	var appElement = document.querySelector('[ng-controller=controller]');\r\n");
 					bw.write("	var $scope = angular.element(appElement).scope();\r\n");
 					bw.write("	$scope.onDelete();\r\n");
 					bw.write("}\r\n");
 					bw.write("	</script>\r\n");
 					bw.write("  </head> \r\n");
-					bw.write("  <body ng-controller=\"listController\" style=\"color: #000;\">\r\n");
+					bw.write("  <body ng-controller=\"controller\" style=\"color: #000;\">\r\n");
 					bw.write("  	<!-- 基本操作区 -->\r\n");
 					bw.write("  	<h5>\r\n");
 					bw.write("  <span class=\"glyphicon glyphicon-search\"  style=\"margin:0px 5px;color:#99DFF8;\" ></span>\r\n");
@@ -1176,7 +1176,7 @@ public class GenerateCode {
 					bw.write("	<!-- 初始化 -->\r\n");
 					bw.write("	<script type=\"text/javascript\">\r\n");
 					bw.write("var add = angular.module(\"add\", []);\r\n");
-					bw.write("add.controller(\"addController\",function($scope, $http) {\r\n");
+					bw.write("add.controller(\"controller\",function($scope, $http) {\r\n");
 					bw.write("	$scope.formData = {};\r\n");
 					bw.write("	$http({\r\n");
 					bw.write("url:parent.getFunctionLinksHref(\"self\"),\r\n");
@@ -1230,7 +1230,7 @@ public class GenerateCode {
 					bw.write("})\r\n");
 					bw.write("	</script>\r\n");
 					bw.write("</head>\r\n");
-					bw.write("  <body ng-controller=\"addController\">\r\n");
+					bw.write("  <body ng-controller=\"controller\">\r\n");
 					bw.write("  	<form method=\"post\" id=\"saveForm\" action=\"\">\r\n");
 					bw.write("   <!-- 操作按钮操作区 -->\r\n");
 					bw.write("   <div class=\"col-lg-12 topActionPanel\">\r\n");
