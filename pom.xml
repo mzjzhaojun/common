@@ -240,6 +240,13 @@
 			<artifactId>mail</artifactId>
 			<version>1.4</version>
 		</dependency>
+		<!-- 编译 -->		
+        <dependency>  
+            <groupId>net.sf.proguard</groupId>  
+            <artifactId>proguard-base</artifactId>  
+            <version>4.9</version>  
+            <scope>runtime</scope>  
+        </dependency>  
 	</dependencies>
 
 	<dependencyManagement>
@@ -269,7 +276,7 @@
 				</executions>
 				<configuration>
 					<attach>true</attach>
-					<attachArtifactClassifier>sm</attachArtifactClassifier>
+					<attachArtifactClassifier>1</attachArtifactClassifier>
 					<!-- attach 的作用是在 install 与 deploy 时将生成的 pg 文件也安装与部署 -->
 					<options> <!-- 详细配置方式参考 ProGuard 官方文档 -->
 						<!--<option>-dontobfuscate</option> -->
@@ -319,7 +326,7 @@
 							class com.yt.app.frame.page.** {*;}</option> <option>-keep class com.yt.app.frame.generate.GenerateCode 
 							{*;}</option> -->
 					</options>
-					<outjar>${project.build.finalName}-sm</outjar>
+					<outjar>${project.build.finalName}-1</outjar>
 					<libs>
 						<lib>${java.home}/lib/rt.jar</lib>
 						<lib>${java.home}/lib/jce.jar</lib>
