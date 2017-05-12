@@ -176,6 +176,14 @@ public class GenerateCode {
 		return list;
 	}
 
+	public void crud(List<String> tables, boolean code) {
+		this.crud(tables, code, false, false, null);
+	}
+
+	public void crud(List<String> tables, boolean code, boolean html) {
+		this.crud(tables, code, html, false, null);
+	}
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void crud(List<String> tables, boolean code, boolean html, boolean data, String sysid) {
 		try {

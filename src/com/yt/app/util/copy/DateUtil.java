@@ -1,4 +1,4 @@
-package com.yt.app.util;
+package main.java.com.yt.app.util.copy;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -8,6 +8,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.Map;
+
+import com.yt.app.modul.lambda.DateOperator;
 
 
 /**
@@ -431,5 +433,30 @@ public class DateUtil {
 		// break;
 		// }
 		return calendar;
+	}
+
+	/**
+	 * 遍历开始日期到结束日期的所有中间时段
+	 * 
+	 * @param startDate
+	 * @param endDate
+	 * @param field
+	 * @return
+	 */
+	public static boolean foreach(Date startDate, Date endDate, int field, int interval, DateOperator operator) {
+		if (startDate == null || endDate == null) {
+			return true;
+		}
+		while (startDate.getTime() <= endDate.getTime()) {
+			boolean res = operator.operator(startDate);
+			if (!res) {
+				return res;
+			}
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(startDate);
+			calendar.add(field, interval);
+			startDate = calendar.getTime();
+		}
+		return true;
 	}
 }

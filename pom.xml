@@ -5,7 +5,7 @@
 
 	<groupId>com.yt.app</groupId>
 	<artifactId>common</artifactId>
-	<version>5.0.1-RELEASES</version>
+	<version>5.1.1-RELEASES</version>
 	<packaging>jar</packaging>
 	<name>common</name>
 
@@ -253,4 +253,94 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>com.github.wvengen</groupId>
+				<artifactId>proguard-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>proguard</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<attach>true</attach>
+					<attachArtifactClassifier>sm</attachArtifactClassifier>
+					<!-- attach 的作用是在 install 与 deploy 时将生成的 pg 文件也安装与部署 -->
+					<options> <!-- 详细配置方式参考 ProGuard 官方文档 -->
+						<!--<option>-dontobfuscate</option> -->
+						<option>-ignorewarnings</option> <!--忽略所有告警 -->
+						<option>-dontshrink</option>   <!--不做 shrink -->
+						<option>-dontoptimize</option> <!--不做 optimize -->
+						<option>-dontskipnonpubliclibraryclasses</option>
+						<option>-dontskipnonpubliclibraryclassmembers</option>
+
+						<!-- <option>-repackageclasses org.noahx.proguard.example.project2.pg</option> -->
+						<!--平行包结构（重构包层次），所有混淆的类放在 pg 包下 -->
+
+						<!-- 以下为 Keep，哪些内容保持不变，因为有一些内容混淆后（a,b,c）导致反射或按类名字符串相关的操作失效 -->
+
+						<option>-keep class **.package-info</option>
+						<!--保持包注解类 -->
+
+						<option>-keepattributes Signature</option>
+						<!--JAXB NEED，具体原因不明，不加会导致 JAXB 出异常，如果不使用 JAXB 根据需要修改 -->
+						<!-- Jaxb requires generics to be available to perform xml parsing 
+							and without this option ProGuard was not retaining that information after 
+							obfuscation. That was causing the exception above. -->
+
+						<option>-keepattributes SourceFile,LineNumberTable,*Annotation*</option>
+						<!--保持源码名与行号（异常时有明确的栈信息），注解（默认会过滤掉所有注解，会影响框架的注解） -->
+
+						<option>-keepclassmembers enum
+							com.yt.app.enums.** { *;}</option>
+						<!--保持枚举中的名子，确保枚举 valueOf 可以使用 -->
+						<option>-keep class com.yt.app.advice.** {*;}</option>
+
+						<option>-keep class com.yt.app.modul.** {*;}</option>
+
+						<option>-keep class com.yt.app.util.** {*;}</option>
+
+						<option>-keep class com.yt.app.annotation.** {*;}</option>
+
+						<option>-keep class com.yt.app.enums.** {*;}</option>
+
+						<option>-keep class com.yt.app.frame.** {*;}</option>
+
+						<!-- <option>-keep class com.yt.app.frame.config.AppConfig {*;}</option> 
+							<option>-keep class com.yt.app.frame.config.MySqlConfig {*;}</option> <option>-keep 
+							class com.yt.app.frame.config.RedisConfig {*;}</option> <option>-keep class 
+							com.yt.app.frame.generate.GenerateId {*;}</option> <option>-keep class com.yt.app.frame.config.PasswordEncoders</option> 
+							<option>-keep class com.yt.app.frame.security.** {*;}</option> <option>-keep 
+							class com.yt.app.frame.page.** {*;}</option> <option>-keep class com.yt.app.frame.generate.GenerateCode 
+							{*;}</option> -->
+					</options>
+					<outjar>${project.build.finalName}-sm</outjar>
+					<libs>
+						<lib>${java.home}/lib/rt.jar</lib>
+						<lib>${java.home}/lib/jce.jar</lib>
+					</libs>
+
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+						<configuration>
+							<start-class>org.springframework.boot.loader.JarLauncher</start-class>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
