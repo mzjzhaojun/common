@@ -157,7 +157,7 @@ public class Aq {
 		return this.file;
 	}
 
-	public List<String> getTables() {
+	public List<String> t() {
 		List<String> localArrayList = new ArrayList<String>();
 		try {
 			Connection localConnection = this.M.getCon();
@@ -176,7 +176,7 @@ public class Aq {
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void crud(List<String> tables, boolean code, boolean html, boolean data, String sysid) {
+	public void p(List<String> tables, boolean code, boolean html, boolean data, String sysid) {
 		try {
 			Connection conn = this.M.getCon();
 			Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
