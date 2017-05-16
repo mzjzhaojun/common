@@ -271,18 +271,18 @@ public class Aq {
 					this.L.write("*/\r\n");
 					this.L.write("@Getter\r\n");
 					this.L.write("@Setter\r\n");
-					this.L.write("public class " + bt + "implements Serializable{\r\n");
+					this.L.write("public class " + bt + " implements Serializable{\r\n");
 					this.L.write("\r\n");
 					this.L.write("private static final long serialVersionUID=1L;\r\n");
 					this.L.write("\r\n");
 					for (int l = 0; l < r.length; l++) {
-						this.L.write("" + ts[l][0] + "" + ts[l][1] + ";\r\n");
+						this.L.write("" + ts[l][0] + " " + ts[l][1] + ";\r\n");
 					}
 					this.L.write("public " + bt + "(){\r\n");
 					this.L.write("}\r\n");
 					String gz = "";
 					for (int i = 0; i < r.length; i++)
-						gz += "," + ts[i][0] + "" + ts[i][1];
+						gz += "," + ts[i][0] + " " + ts[i][1];
 					this.L.write("public " + bt + "(" + gz.substring(1) + "){\r\n");
 					for (int i = 0; i < r.length; i++)
 						this.L.write("this." + ts[i][1] + "=" + ts[i][1] + ";\r\n");
@@ -312,8 +312,8 @@ public class Aq {
 					file = h(bt);
 					this.K = new FileWriter(file);
 					this.L = new BufferedWriter(this.K);
-					this.L.write("<?xml version=\"1.0\"encoding=\"UTF-8\"?>\r\n");
-					this.L.write("<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\"\"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">\r\n");
+					this.L.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n");
+					this.L.write("<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">\r\n");
 					this.L.write("<mapper namespace=\"" + DbConnection.basePage + ".mapper." + bt + "Mapper\">\r\n");
 
 					// Base_Column_List
