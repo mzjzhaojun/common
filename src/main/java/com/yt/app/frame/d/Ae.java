@@ -25,7 +25,7 @@ import java.util.Map;
 
 @Configuration
 @MapperScan(basePackages = { "com.yt.app.api.v1.mapper" })
-public class AE implements TransactionManagementConfigurer {
+public class Ae implements TransactionManagementConfigurer {
 
 	@Autowired
 	MySqlConfig g;
