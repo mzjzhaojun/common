@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import com.yt.app.frame.f.PageBeanEnum;
 import com.yt.app.frame.f.RequestMethodEnums;
-import com.yt.app.frame.k.BodyReaderHttpServletRequestWrapper;
+import com.yt.app.frame.k.Au;
 import com.yt.app.frame.p.CusAccessObjectUtil;
 import com.yt.app.frame.p.ReaderUtil;
 
@@ -32,7 +32,7 @@ public class Ao extends GenericFilterBean {
 		long l1 = System.currentTimeMillis();
 		if ((localHttpServletRequest.getMethod().equals(RequestMethodEnums.POST.getValue()))
 				&& (localHttpServletRequest.getRequestURI().indexOf("/file") == -1)) {
-			BodyReaderHttpServletRequestWrapper localBodyReaderHttpServletRequestWrapper = new BodyReaderHttpServletRequestWrapper(
+			Au localBodyReaderHttpServletRequestWrapper = new Au(
 					localHttpServletRequest);
 			this.logger.info(String.format("===>>>>>> ip : %s", new Object[] { CusAccessObjectUtil.getIpAddress(localHttpServletRequest) }));
 			this.logger.info(String.format("===>>>>>> url : %s", new Object[] { localHttpServletRequest.getRequestURI() }));

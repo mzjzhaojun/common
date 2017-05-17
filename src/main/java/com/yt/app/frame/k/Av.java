@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class Progress implements Serializable {
+public class Av implements Serializable {
 
 	/**
 	 * 
