@@ -324,28 +324,28 @@ public class Aq {
 
 					// ResultMap
 					this.L.write("<!-- 基础返回对象封装 -->\r\n");
-					this.L.write("<resultMap id=\"ResultMap\"type=\"" + DbConnection.basePage + ".entity." + bt + "\">\r\n");
+					this.L.write("<resultMap id=\"ResultMap\" type=\"" + DbConnection.basePage + ".entity." + bt + "\">\r\n");
 					for (int i = 0; i < r.length; i++) {
-						this.L.write("<id property=\"" + ts[i][1] + "\"column=\"" + ts[i][1] + "\"/>\r\n");
+						this.L.write("<id property=\"" + ts[i][1] + "\" column=\"" + ts[i][1] + "\"/>\r\n");
 					}
 					this.L.write("</resultMap>\r\n");
 
 					this.L.write("<!-- 默认新增 -->\r\n");
-					this.L.write("<insert id=\"post\"parameterType=\"" + DbConnection.basePage + ".entity." + bt + "\">\r\n");
+					this.L.write("<insert id=\"post\" parameterType=\"" + DbConnection.basePage + ".entity." + bt + "\">\r\n");
 					this.L.write("insert into " + tb + "(" + insertColumn + ")\r\n");
 					this.L.write("values (" + insertValue + ")\r\n");
 					this.L.write("</insert>\r\n");
 
 					// deleteByIds
 					this.L.write("<!-- 默认删除id对象 -->\r\n");
-					this.L.write("<delete id=\"delete\"parameterType=\"java.lang.String\">\r\n");
+					this.L.write("<delete id=\"delete\" parameterType=\"java.lang.String\">\r\n");
 					this.L.write("delete from " + tb + "\r\n");
 					this.L.write("where id = #{id}\r\n");
 					this.L.write("</delete>\r\n");
 
 					// update
 					this.L.write("<!-- 默认更新id对象 -->\r\n");
-					this.L.write("<update id=\"put\"parameterType=\"" + DbConnection.basePage + ".entity." + bt + "\">\r\n");
+					this.L.write("<update id=\"put\" parameterType=\"" + DbConnection.basePage + ".entity." + bt + "\">\r\n");
 					this.L.write("update " + tb + "\r\n");
 					this.L.write("<set>\r\n");
 					for (int i = 0; i < r.length; i++) {
@@ -371,7 +371,7 @@ public class Aq {
 
 					// getById
 					this.L.write("<!-- 默认获得id对象 -->\r\n");
-					this.L.write("<select id=\"get\"parameterType=\"java.lang.String\"resultMap=\"ResultMap\">\r\n");
+					this.L.write("<select id=\"get\" parameterType=\"java.lang.String\" resultMap=\"ResultMap\">\r\n");
 					this.L.write("select\r\n");
 					this.L.write("<include refid=\"Base_Column_List\"/>\r\n");
 					this.L.write("from " + tb + "\r\n");
@@ -380,7 +380,7 @@ public class Aq {
 
 					// getList
 					this.L.write("<!-- 默认集合 -->\r\n");
-					this.L.write("<select id=\"list\"parameterType=\"java.util.HashMap\"resultMap=\"ResultMap\">\r\n");
+					this.L.write("<select id=\"list\" parameterType=\"java.util.HashMap\" resultMap=\"ResultMap\">\r\n");
 					this.L.write("select\r\n");
 					this.L.write("<include refid=\"Base_Column_List\"/>\r\n");
 					this.L.write("from " + tb + "\r\n");
@@ -400,7 +400,7 @@ public class Aq {
 
 					// getMap
 					this.L.write("<!-- 默认返回MAP集合 -->\r\n");
-					this.L.write("<select id=\"map\"parameterType=\"java.util.HashMap\"resultType=\"java.util.HashMap\">\r\n");
+					this.L.write("<select id=\"map\" parameterType=\"java.util.HashMap\" resultType=\"java.util.HashMap\">\r\n");
 					this.L.write("select\r\n");
 					this.L.write("<include refid=\"Base_Column_List\"/>\r\n");
 					this.L.write("from " + tb + "\r\n");
@@ -419,7 +419,7 @@ public class Aq {
 					this.L.write("</select>\r\n");
 					// getCount
 					this.L.write("<!-- 默认集合统计 -->\r\n");
-					this.L.write("<select id=\"countlist\"parameterType=\"java.util.HashMap\"resultType=\"int\">\r\n");
+					this.L.write("<select id=\"countlist\" parameterType=\"java.util.HashMap\" resultType=\"int\">\r\n");
 					this.L.write("select count(*) from " + tb + "\r\n");
 					this.L.write("<where>\r\n");
 					this.L.write("1=1\r\n");
@@ -429,7 +429,7 @@ public class Aq {
 					this.L.write("</where>\r\n");
 					this.L.write("</select>\r\n");
 					this.L.write("<!-- 默认返回MAP集合统计 -->\r\n");
-					this.L.write("<select id=\"countmap\"parameterType=\"java.util.HashMap\"resultType=\"int\">\r\n");
+					this.L.write("<select id=\"countmap\" parameterType=\"java.util.HashMap\" resultType=\"int\">\r\n");
 					this.L.write("select count(*) from " + tb + "\r\n");
 					this.L.write("<where>\r\n");
 					this.L.write("1=1\r\n");
@@ -439,7 +439,7 @@ public class Aq {
 					this.L.write("</where>\r\n");
 					this.L.write("</select>\r\n");
 					this.L.write("<!-- 默认获取Ids的对象 -->\r\n");
-					this.L.write("<select id=\"listByArrayId\"parameterType=\"java.util.HashMap\"resultMap=\"ResultMap\">\r\n");
+					this.L.write("<select id=\"listByArrayId\" parameterType=\"java.util.HashMap\" resultMap=\"ResultMap\">\r\n");
 					this.L.write("select\r\n");
 					this.L.write("<include refid=\"Base_Column_List\"/>\r\n");
 					this.L.write("from " + tb + "\r\n");
@@ -447,7 +447,7 @@ public class Aq {
 					this.L.write("1=1\r\n");
 					this.L.write("<if test=\"array != null and array != ''\">\r\n");
 					this.L.write("and id in\r\n");
-					this.L.write("<foreach item=\"item\"index=\"index\"collection=\"array\"open=\"(\"separator=\",\"close=\")\">\r\n");
+					this.L.write("<foreach item=\"item\" index=\"index\" collection=\"array\" open=\"(\" separator=\",\" close=\")\">\r\n");
 					this.L.write("#{item}\r\n");
 					this.L.write("</foreach>\r\n");
 					this.L.write("</if>\r\n");
@@ -503,7 +503,7 @@ public class Aq {
 					this.L.write("* @return 指定的唯一标识符对应的持久化对象，如果没有对应的持久化对象，则返回null。\r\n");
 					this.L.write("*/\r\n");
 					this.L.write("@RedisCacheAnnotation(classs = " + bt + ".class)\r\n");
-					this.L.write("public " + bt + "get(Long id);\r\n");
+					this.L.write("public " + bt + " get(Long id);\r\n");
 					this.L.write("\r\n");
 					this.L.write("/**\r\n");
 					this.L.write("* 删除指定的唯一标识符数组对应的持久化对象\r\n");
@@ -582,7 +582,7 @@ public class Aq {
 					this.L.write("* @createdate" + DateTimeUtil.getDateTime() + "\r\n");
 					this.L.write("*/\r\n");
 					this.L.write("\r\n");
-					this.L.write("public interface " + bt + "Serviceextends IBaseService<" + bt + ", Long>{\r\n");
+					this.L.write("public interface " + bt + "Service extends IBaseService<" + bt + ", Long>{\r\n");
 					this.L.write("}");
 					this.L.flush();
 
@@ -600,7 +600,7 @@ public class Aq {
 					this.L.write("import " + DbConnection.commndPage + ".impl.BaseServiceImpl;\r\n");
 					this.L.write("import " + DbConnection.basePage + "." + "entity." + bt + ";\r\n");
 					this.L.write("import com.yt.app.frame.m.IPage;\r\n");
-					this.L.write("import com.yt.app.frame.m.PageBean;\r\n");
+					this.L.write("import com.yt.app.frame.n.PageBean;\r\n");
 					this.L.write("import com.yt.app.frame.p.RequestUtil;\r\n");
 					this.L.write("import java.util.List;\r\n");
 					this.L.write("import java.util.Map;\r\n");
@@ -619,7 +619,7 @@ public class Aq {
 					this.L.write("\r\n");
 					this.L.write("@Override\r\n");
 					this.L.write("@Transactional\r\n");
-					this.L.write("public Integer post(" + bt + "t) {\r\n");
+					this.L.write("public Integer post(" + bt + " t) {\r\n");
 					this.L.write("Integer i = mapper.post(t);\r\n");
 					this.L.write("return i;\r\n");
 					this.L.write("}\r\n");
@@ -640,8 +640,8 @@ public class Aq {
 					this.L.write("}\r\n");
 					this.L.write("\r\n");
 					this.L.write("@Override\r\n");
-					this.L.write("public " + bt + "get(Long id) {\r\n");
-					this.L.write("" + bt + "t = mapper.get(id);\r\n");
+					this.L.write("public " + bt + " get(Long id) {\r\n");
+					this.L.write("" + bt + " t = mapper.get(id);\r\n");
 					this.L.write("return t;\r\n");
 					this.L.write("}\r\n");
 					this.L.write("}");
@@ -669,15 +669,15 @@ public class Aq {
 					this.L.write("*/\r\n");
 					this.L.write("\r\n");
 					this.L.write("public class " + bt + "Resource extends ResourceSupport {\r\n");
-					this.L.write("private final " + bt + "t;\r\n");
-					this.L.write("public " + bt + "Resource(" + bt + "entity) {\r\n");
+					this.L.write("private final " + bt + " t;\r\n");
+					this.L.write("public " + bt + "Resource(" + bt + " entity) {\r\n");
 					this.L.write("this.t = entity;\r\n");
 					this.L.write("this.add(linkTo(" + bt + "Controller.class).withRel(\"post\"));\r\n");
 					this.L.write("this.add(linkTo(methodOn(" + bt + "Controller.class).list(null, null, null)).withRel(\"list\"));\r\n");
 
 					this.L.write("\r\n");
 					this.L.write("}\r\n");
-					this.L.write("public " + bt + "get" + bt + "() {\r\n");
+					this.L.write("public " + bt + " get" + bt + "() {\r\n");
 					this.L.write("return t;\r\n");
 					this.L.write("}\r\n");
 					this.L.write("\r\n");
@@ -708,12 +708,12 @@ public class Aq {
 					this.L.write("public " + bt + "ResourceAssembler() {\r\n");
 					this.L.write("super(" + bt + "Controller.class, " + bt + "Resource.class);\r\n");
 					this.L.write("}\r\n");
-					this.L.write("@Override");
-					this.L.write("public " + bt + "Resource toResource(" + bt + "t) {\r\n");
+					this.L.write("@Override\r\n");
+					this.L.write("public " + bt + "Resource toResource(" + bt + " t) {\r\n");
 					this.L.write("return createResourceWithId(t.getId(), t);\r\n");
 					this.L.write("}\r\n");
 					this.L.write("@Override\r\n");
-					this.L.write("protected " + bt + "Resource instantiateResource(" + bt + "t) {\r\n");
+					this.L.write("protected " + bt + "Resource instantiateResource(" + bt + " t) {\r\n");
 					this.L.write("return new " + bt + "Resource(t);\r\n");
 					this.L.write("}\r\n");
 					this.L.write("\r\n");
