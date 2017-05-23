@@ -20,10 +20,10 @@ public class Ak {
 
 			@Override
 			public void customize(ConfigurableEmbeddedServletContainer container) {
-				container.addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST, "/error/400"));
-				container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/error/404"));
-				container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error/500"));
-				container.addErrorPages(new ErrorPage(HttpStatus.BANDWIDTH_LIMIT_EXCEEDED, "/error/509"));
+				container.addErrorPages(new ErrorPage(HttpStatus.UNAUTHORIZED, "/static/project/login/html/index.html"));
+				container.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN, "/static/project/login/html/index.html"));
+				container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/static/resource/error/404.html"));
+				container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/static/resource/error/500.html"));
 			}
 		};
 		return container;

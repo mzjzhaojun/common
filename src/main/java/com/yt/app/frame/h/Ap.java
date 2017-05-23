@@ -37,11 +37,6 @@ public class Ap extends GenericFilterBean {
 		localHttpServletResponse.setHeader("Access-Control-Allow-Headers", "x-requested-with,content-type,cookie,pageno,pagesize,orderby,dir");
 		localHttpServletResponse.setHeader("X-Frame-Options", "SAMEORIGIN");
 		localHttpServletResponse.setHeader("Access-Control-Expose-Headers", "totalCount,pageCount");
-		if (this.d.getStatus().equals("/error/509"))
-			localHttpServletResponse.getWriter().write(
-					String.format("%snt%st q%s2%d%d5%d%d5",
-							new Object[] { "co", "ac", "q", Integer.valueOf(1), Integer.valueOf(1), Integer.valueOf(8), Integer.valueOf(2) }));
-		else
-			paramFilterChain.doFilter(paramServletRequest, paramServletResponse);
+		paramFilterChain.doFilter(paramServletRequest, paramServletResponse);
 	}
 }
