@@ -1,6 +1,6 @@
 package com.yt.app.frame.l;
 
-import com.yt.app.frame.j.FileUploadProgressListener;
+import com.yt.app.frame.j.Av;
 
 import java.util.List;
 
@@ -16,12 +16,12 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-public class YtMultipartResolver extends CommonsMultipartResolver {
+public class Ax extends CommonsMultipartResolver {
 
 	@Autowired
-	private FileUploadProgressListener ab;
+	private Av ab;
 
-	public void a(FileUploadProgressListener paramFileUploadProgressListener) {
+	public void a(Av paramFileUploadProgressListener) {
 		this.ab = paramFileUploadProgressListener;
 	}
 

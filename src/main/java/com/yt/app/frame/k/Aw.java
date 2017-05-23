@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletRequestWrapper;
 
 import jodd.io.StreamUtil;
 
-public class BodyReaderHttpServletRequestWrapper extends HttpServletRequestWrapper {
+public class Aw extends HttpServletRequestWrapper {
 
 	private final byte[] body;
 
-	public BodyReaderHttpServletRequestWrapper(HttpServletRequest request) throws IOException {
+	public Aw(HttpServletRequest request) throws IOException {
 		super(request);
 		body = StreamUtil.readBytes(request.getReader(), "utf-8");
 	}

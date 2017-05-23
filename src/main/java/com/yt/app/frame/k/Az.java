@@ -9,7 +9,7 @@ import com.alibaba.fastjson.util.TypeUtils;
  * @author Ray
  *
  */
-public class PropertiesModel extends Hashtable<String, String> {
+public class Az extends Hashtable<String, String> {
 	/**
 	 * 
 	 */
@@ -19,7 +19,7 @@ public class PropertiesModel extends Hashtable<String, String> {
 	private String charsetFrom;
 	private String charsetTo;
 
-	public PropertiesModel(Long vision, Properties properties,
+	public Az(Long vision, Properties properties,
 			String charsetFrom, String charsetTo) {
 		super();
 		this.visionDate = vision;
