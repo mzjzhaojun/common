@@ -1,6 +1,8 @@
 package com.yt.app.frame.p;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 数字工具类
@@ -8,6 +10,10 @@ import java.math.BigDecimal;
  *
  */
 public class NumberUtil {
+
+	private static long orderNum = 0l;
+	private static String date;
+
 	/**
 	 * 获取一个不大于max的整数
 	 * 
@@ -69,6 +75,23 @@ public class NumberUtil {
 			}
 		}
 		return value;
+	}
+
+	/**
+	 * 生成订单编号
+	 * 
+	 * @return
+	 */
+	public static synchronized String getOrderNo() {
+		String str = new SimpleDateFormat("yyMMddHHmm").format(new Date());
+		if (date == null || !date.equals(str)) {
+			date = str;
+			orderNum = 0l;
+		}
+		orderNum++;
+		long orderNo = Long.parseLong((date)) * 10000;
+		orderNo += orderNum;
+		return orderNo + "";
 	}
 
 	public static void main(String[] args) {
